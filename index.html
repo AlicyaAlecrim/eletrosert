@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eletrosert - Elétrica & Automação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e Configurações Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF0000;
+            --secondary-color: #FFD700;
+            --dark-color: #000000;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --white-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-desktop a {
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-desktop a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-desktop a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s;
+        }
+
+        .nav-desktop a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-mobile {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .nav-mobile.active {
+            display: flex;
+        }
+
+        .nav-mobile a {
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-mobile a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('images/3940ab7a-d786-4774-a943-eab218d1d7fa.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--white-color);
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-color);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Portfolio Hero Section */
+        .portfolio-hero {
+            min-height: 60vh;
+            padding-top: 80px;
+        }
+
+        /* Portfolio Page Specific Styles */
+        .portfolio-section {
+            padding: 60px 0;
+        }
+
+        .portfolio-description {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 1.2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* Large Portfolio Grid */
+        .portfolio-grid-large {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .portfolio-item-large {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            background: var(--white-color);
+        }
+
+        .portfolio-item-large:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .portfolio-image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .portfolio-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item-large:hover .portfolio-image-container img {
+            transform: scale(1.1);
+        }
+
+        
+
+        .portfolio-item-large:hover .portfolio-overlay-large {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            color: var(--white-color);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item-large:hover .portfolio-content {
+            transform: translateY(0);
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .portfolio-content p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Portfolio CTA Section */
+        .portfolio-cta {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, var(--dark-color) 0%, #333 100%);
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .portfolio-cta h3 {
+            color: var(--secondary-color);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-cta p {
+            color: var(--white-color);
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive Design for Portfolio */
+        @media (max-width: 1200px) {
+            .portfolio-grid-large {
+                grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .portfolio-grid-large {
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            }
+            
+            .portfolio-image-container {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid-large {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .portfolio-image-container {
+                height: 300px;
+            }
+            
+            .portfolio-content h3 {
+                font-size: 1.5rem;
+            }
+            
+            .portfolio-content p {
+                font-size: 1rem;
+            }
+            
+            .portfolio-cta {
+                padding: 40px 20px;
+            }
+            
+            .portfolio-cta h3 {
+                font-size: 1.8rem;
+            }
+            
+            .portfolio-cta p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-grid-large {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-image-container {
+                height: 250px;
+            }
+            
+            .portfolio-overlay-large {
+                padding: 20px;
+            }
+            
+            .portfolio-content h3 {
+                font-size: 1.3rem;
+            }
+            
+            .portfolio-description {
+                font-size: 1.1rem;
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Animation for portfolio items */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .portfolio-item-large {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .portfolio-item-large:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .portfolio-item-large:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .portfolio-item-large:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .portfolio-item-large:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        .portfolio-item-large:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+
+        .portfolio-hero .hero-content {
+            padding: 80px 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #cc0000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e6c200;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-light {
+            background-color: var(--light-color);
+        }
+
+        .section-dark {
+            background-color: var(--dark-color);
+            color: var(--white-color);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .title-underline {
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 0 auto 50px;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-text .btn {
+            margin-top: 20px;
+        }
+
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Why Choose Us */
+        .why-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-item i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .feature-item p {
+            color: #ccc;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--white-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            background-color: var(--dark-color);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-icon i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+        }
+
+        .service-card h3 {
+            padding: 25px 25px 15px;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .service-card ul {
+            list-style: none;
+            padding: 0 25px;
+            margin-bottom: 15px;
+        }
+
+        .service-card li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .service-card li span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .service-card p {
+            padding: 0 25px 25px;
+            color: var(--gray-color);
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-overlay h3 {
+            color: var(--white-color);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .portfolio-overlay p {
+            color: var(--secondary-color);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item i {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        .contact-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--white-color);
+        }
+
+        .contact-item p {
+            color: #ccc;
+        }
+
+        .contact-hours {
+            margin-top: 40px;
+        }
+
+        .contact-hours h3 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-hours p {
+            color: #ccc;
+        }
+
+        /* Contact Form */
+        .contact-form-wrapper {
+            background-color: var(--white-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form-wrapper h3 {
+            color: var(--dark-color);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .form-message.success {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.95);
+            color: var(--white-color);
+            padding: 50px 0 20px;
+            border-top: 2px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-column i {
+            width: 20px;
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .contact-form-wrapper {
+                padding: 25px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card,
+        .portfolio-item {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cc0000;
+        }
+
+        /* WhatsApp Styles */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E !important;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4) !important;
+        }
+
+        @keyframes pulse-whatsapp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Ajuste para mobile */
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 25px;
+            }
+            
+            .hero-buttons .btn-whatsapp {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+     <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5516992251017?text=Olá! Gostaria de solicitar um orçamento." 
+       class="whatsapp-float" 
+       target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>ELETROSERT</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-desktop">
+                    <a href="index.html">Home</a>
+                    <a href="#about">Quem Somos</a>
+                    <a href="#services">Serviços</a>
+                    <a href="#portfolio">Trabalhos</a>
+                    <a href="#contact">Contato</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <nav class="nav-mobile" id="mobileMenu">
+                <a href="index.html">Home</a>
+                <a href="#about">Quem Somos</a>
+                <a href="#services">Serviços</a>
+                <a href="#portfolio">Trabalhos</a>
+                <a href="#contact">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>ELÉTRICA & AUTOMAÇÃO INDUSTRIAL</h1>
+            <p>Especializada em soluções avançadas em sistemas elétricos e automação desde 2010</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Solicitar Orçamento</a>
+                <a href="#services" class="btn btn-secondary">Nossos Serviços</a>
+                <a href="#portfolio" class="btn btn-secondary">Ver Nossos Trabalhos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">QUEM SOMOS</h2>
+            <div class="title-underline"></div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Fundada em 2010, a <strong>Eletrosert Elétrica & Automação</strong> é especializada em soluções avançadas em sistemas elétricos e automação. Com sede em Sertãozinho-SP, destaca-se na manutenção industrial, além da instalação e comissionamento de máquinas e equipamentos industriais.</p>
+                    <p>A empresa também desenvolve projetos de integração completa, incluindo análise das necessidades do cliente, elaboração dos projetos elétricos e de automação, fabricação de painéis, instalação e assistência técnica 24 horas.</p>
+                    <p>Nossos serviços são executados com excelência técnica, garantindo desempenho, segurança e a confiança de contar com profissionais especializados.</p>
+                    <a href="#contact" class="btn btn-primary">Entre em Contato</a>
+                </div>
+                <div class="about-image">
+                    <img src="images/Design sem nome (2).png" alt="Equipe Eletrosert">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">POR QUE ESCOLHER A ELETROSERT?</h2>
+            <div class="title-underline"></div>
+
+            <p class="why-subtitle">
+                <strong>Comprometida com qualidade e segurança, a Eletrosert entrega soluções precisas, eficientes e alinhadas às necessidades de cada cliente.</strong>
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-award"></i>
+                    <h3>Qualidade</h3>
+                    <p>Serviços executados com os mais altos padrões de qualidade</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Segurança</h3>
+                    <p>Total comprometimento com as normas de segurança</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <h3>Disponibilidade</h3>
+                    <p>Assistência técnica 24 horas para emergências</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Experiência</h3>
+                    <p>Mais de 10 anos de experiência no mercado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section section-light">
+        <div class="container">
+            <h2 class="section-title">NOSSOS SERVIÇOS</h2>
+            <div class="title-underline"></div>
+
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Montagem e Instalação</h3>
+                    <ul>
+                        <li><span>⚡</span> Montagem de Painéis Elétricos</li>
+                        <li><span>⚡</span> Instalações Elétricas Completas</li>
+                        <li><span>⚡</span> Montagem de Látios, Eletrocalhas e Tubulação</li>
+                    </ul>
+                    <p>Projetos e manuseio de painéis elétricos industriais, comerciais e residenciais, seguindo normas técnicas e garantindo segurança e eficiência.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Manutenção</h3>
+                    <ul>
+                        <li><span>⚡</span> Manutenção de Redes Elétricas</li>
+                        <li><span>⚡</span> Contratos de Manutenção</li>
+                        <li><span>⚡</span> Manutenção Periódica — Preventiva e Emergencial</li>
+                    </ul>
+                    <p>Diagnóstico, correção e otimização de redes elétricas, com manutenção preventiva e corretiva. Planos personalizados para suporte contínuo.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>Projetos e Automação</h3>
+                    <ul>
+                        <li><span>⚡</span> Projetos Elétricos</li>
+                        <li><span>⚡</span> Sistemas de Automação</li>
+                        <li><span>⚡</span> Integração de Sistemas</li>
+                    </ul>
+                    <p>Desenvolvemos projetos completos de elétrica e automação, desde a concepção até a implementação e comissionamento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section portfolio-section">
+        <div class="container">
+            <h2 class="section-title">PORTFÓLIO DE PROJETOS</h2>
+            <div class="title-underline"></div>
+            <p class="portfolio-description">
+                Ao longo de mais de 10 anos de atuação, desenvolvemos diversos projetos em elétrica e automação industrial. 
+                Confira abaixo alguns dos nossos trabalhos realizados com excelência e qualidade.
+            </p>
+
+            <div class="portfolio-grid-large">
+                <div class="portfolio-item-large">
+                    <div class="portfolio-image-container">
+                        <img src="images/95a93213-f60b-4e1a-b346-9ec0924a1470.jpg" alt="Painéis de Controle Industriais">
+                        <div class="portfolio-overlay-large">
+                            <div class="portfolio-content">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item-large">
+                    <div class="portfolio-image-container">
+                        <img src="images/ebac3621-bc0a-4877-bde5-69eabbd9641f.jpg" alt="Sistemas Elétricos Completos">
+                        <div class="portfolio-overlay-large">
+                            <div class="portfolio-content">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item-large">
+                    <div class="portfolio-image-container">
+                        <img src="images/1fa71405-90a5-4294-aef7-9dd7cc354ffd.jpg" alt="Automação Industrial">
+                        <div class="portfolio-overlay-large">
+                            <div class="portfolio-content">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item-large">
+                    <div class="portfolio-image-container">
+                        <img src="images/926e5547-5731-481a-bacf-af06b2272dc2.jpg" alt="Inversores de Frequência">
+                        <div class="portfolio-overlay-large">
+                            <div class="portfolio-content">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item-large">
+                    <div class="portfolio-image-container">
+                        <img src="images/c2ba0f03-d7df-4b1c-b599-5728517165e7.jpg" alt="Quadros Elétricos">
+                        <div class="portfolio-overlay-large">
+                            <div class="portfolio-content">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item-large">
+                    <div class="portfolio-image-container">
+                        <img src="images/187efc19-173d-4c87-b758-7d2235a60a90.jpg" alt="Sistemas de Controle">
+                        <div class="portfolio-overlay-large">
+                            <div class="portfolio-content">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-cta">
+                <h3>Gostou dos nossos trabalhos?</h3>
+                <p>Entre em contato e solicite um orçamento para o seu projeto</p>
+                
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">CONTATO</h2>
+            <div class="title-underline"></div>
+
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h3>Entre em Contato Conosco</h3>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Endereço</strong>
+                            <p>Avenida Almir Maria Miranda 209, Sertãozinho, São Paulo</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Telefones</strong>
+                            <p>(16) 3524-2257 | (16) 99225-1017</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>E-mail</strong>
+                            <p>eletrosert@yahoo.com.br</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-hours">
+                        <h3>Horário de Atendimento</h3>
+                        <p>Segunda a Sexta: 8h às 18h</p>
+                        <p>Plantão 24h para emergências</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper">
+                    <h3>Solicite um Orçamento</h3>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nome *</label>
+                            <input type="text" id="name" name="name" required placeholder="Seu nome completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail *</label>
+                            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Serviço</label>
+                            <select id="service" name="service">
+                                <option value="">Selecione o serviço</option>
+                                <option value="montagem">Montagem e Instalação</option>
+                                <option value="manutencao">Manutenção</option>
+                                <option value="projetos">Projetos e Automação</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Mensagem *</label>
+                            <textarea id="message" name="message" required placeholder="Descreva sua necessidade" rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Enviar Mensagem</button>
+                    </form>
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>ELETROSERT</h3>
+                    <p>Especializada em soluções avançadas em sistemas elétricos e automação desde 2010.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">Quem Somos</a></li>
+                        <li><a href="#services">Serviços</a></li>
+                        <li><a href="#portfolio">Trabalhos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Serviços</h3>
+                    <ul>
+                        <li>Montagem e Instalação</li>
+                        <li>Manutenção Elétrica</li>
+                        <li>Projetos e Automação</li>
+                        <li>Assistência 24h</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Sertãozinho, SP</li>
+                        <li><i class="fas fa-phone"></i> (16) 3524-2257 / (16) 99225-1017</li>
+                        <li><i class="fas fa-envelope"></i> eletrosert@yahoo.com.br</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2024 Eletrosert Elétrica & Automação. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Contact Form Handling - Modificado para WhatsApp
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value
+            };
+
+            // Basic validation
+            if (!formData.name || !formData.email || !formData.message) {
+                showMessage('Por favor, preencha todos os campos obrigatórios.', 'error');
+                return;
+            }
+
+            if (!validateEmail(formData.email)) {
+                showMessage('Por favor, insira um e-mail válido.', 'error');
+                return;
+            }
+
+            if (formData.message.length < 10) {
+                showMessage('A mensagem deve ter pelo menos 10 caracteres.', 'error');
+                return;
+            }
+
+            // Prepare WhatsApp message
+            const whatsappMessage = `*NOVA SOLICITAÇÃO DE ORÇAMENTO - ELETROSERT*
+
+        *Nome:* ${formData.name}
+        *E-mail:* ${formData.email}
+        *Telefone:* ${formData.phone || 'Não informado'}
+        *Serviço:* ${getServiceName(formData.service)}
+        *Mensagem:* ${formData.message}
+
+        _Enviado através do site Eletrosert_`;
+
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            // WhatsApp number (replace with your actual number)
+            const whatsappNumber = '5516992251017';
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappURL, '_blank');
+            
+            // Show success message
+            showMessage('Redirecionando para o WhatsApp...', 'success');
+            
+            // Reset form after a short delay
+            setTimeout(() => {
+                contactForm.reset();
+            }, 2000);
+        });
+
+        // Helper function to get service name
+        function getServiceName(serviceValue) {
+            const services = {
+                'montagem': 'Montagem e Instalação',
+                'manutencao': 'Manutenção',
+                'projetos': 'Projetos e Automação',
+                'outro': 'Outro'
+            };
+            return services[serviceValue] || 'Não especificado';
+        }
+
+        // Resto do código permanece igual
+        // Helper function to validate email
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Helper function to show form messages
+        function showMessage(message, type) {
+            formMessage.textContent = message;
+            formMessage.className = `form-message ${type}`;
+            formMessage.style.display = 'block';
+
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+
+            // Scroll to message
+            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = document.querySelectorAll('.nav-mobile a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(0, 0, 0, 0.98)';
+            } else {
+                header.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(section);
+        });
+
+        // Phone number formatting
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                
+                if (value.length > 11) {
+                    value = value.slice(0, 11);
+                }
+                
+                if (value.length > 10) {
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                } else if (value.length > 6) {
+                    value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+                } else if (value.length > 2) {
+                    value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+                } else if (value.length > 0) {
+                    value = value.replace(/(\d{0,2})/, '($1');
+                }
+                
+                e.target.value = value;
+            });
+        }
+
+        // Add loading animation to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Don't add animation for form submit buttons (handled separately)
+                if (this.type !== 'submit') {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }
+            });
+        });
+
+        // Lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Console message
+        console.log('%c🔌 Eletrosert - Elétrica & Automação', 'color: #FFD700; font-size: 20px; font-weight: bold;');
+        console.log('%cEspecializada em soluções avançadas em sistemas elétricos e automação desde 2010', 'color: #FF0000; font-size: 14px;');
+        console.log('%cContato: (16) 3524-2257 | eletrosert@yahoo.com.br', 'color: #666; font-size: 12px;');
+    </script>
+</body>
+</html>
